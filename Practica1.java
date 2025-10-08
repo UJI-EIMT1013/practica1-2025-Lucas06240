@@ -30,7 +30,24 @@ public class Practica1 {
 
     //EJERCICIO2
     public static void separate (Set<Integer> cuadrados, Set<Integer> noCuadrados)  {
-        //TODO
+        Iterator<Integer> itCuadrados = cuadrados.iterator();
+        Iterator<Integer> itNoCuadrados = noCuadrados.iterator();
+        Set<Integer> todos = new HashSet<>();
+        todos.addAll(cuadrados); todos.addAll(noCuadrados);
+        while (itCuadrados.hasNext()) {
+            int elemento = itCuadrados.next();
+            if (!noCuadrados.contains(Math.sqrt(elemento)) || !cuadrados.contains(Math.sqrt(elemento))) {
+                noCuadrados.add(elemento);
+                itCuadrados.remove();
+            }
+        }
+        while (itNoCuadrados.hasNext()) {
+            int elemento = itNoCuadrados.next();
+            if (!noCuadrados.contains(Math.sqrt(elemento)) || !cuadrados.contains(Math.sqrt(elemento))) {
+                cuadrados.add(elemento);
+                itNoCuadrados.remove();
+            }
+        }
 
     }
 
