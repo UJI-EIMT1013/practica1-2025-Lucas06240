@@ -11,12 +11,16 @@ public class Practica1 {
         while (it.hasNext()) {
             Integer elemento = it.next();
             if (elemento != 0) {
-                vistos.add(elemento);
-                for (int visto : vistos) {
-                    if (elemento % visto == 0 && elemento != visto) {
-                        resultado.add(elemento);
-                    } else if (visto % elemento == 0 && elemento != visto) {
-                        resultado.add(visto);
+                if (vistos.contains(elemento)) {
+                    resultado.add(elemento);
+                } else {
+                    vistos.add(elemento);
+                    for (int visto : vistos) {
+                        if (elemento % visto == 0 && elemento != visto) {
+                            resultado.add(elemento);
+                        } else if (visto % elemento == 0 && elemento != visto) {
+                            resultado.add(visto);
+                        }
                     }
                 }
             }
