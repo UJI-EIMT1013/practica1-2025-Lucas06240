@@ -1,8 +1,6 @@
 package practica1;
 
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.function.DoubleToIntFunction;
 
 public class Practica1 {
 
@@ -111,11 +109,26 @@ public class Practica1 {
     }
 
     //EJERCICIO 4
-    public static<T> Collection<Set<T>> coverageSet2 (Set<T> u,ArrayList<Set<T>> col) {
-        //TODO
-        return null;
+    public static<T> Collection<Set<T>> coverageSet2 (Set<T> u, ArrayList<Set<T>> col) {
+        Collection<Set<T>> resultado = new HashSet<>();
+        ListIterator<Set<T>> itCol = col.listIterator();
+        boolean encontrados = false;
+
+        while (itCol.hasNext() && !encontrados) {
+            Set<T> conjunto1 = itCol.next();
+            for (Set<T> conjunto2 : col) {
+                Set<T> copiaConjunto2 = new HashSet<>(conjunto2);
+                if (!copiaConjunto2.equals(conjunto1) && !conjunto1.equals(u) && !conjunto2.equals(u)) {
+                    copiaConjunto2.addAll(conjunto1);
+                    if (copiaConjunto2.equals(u) && !encontrados) {
+                        resultado.add(conjunto1);
+                        resultado.add(conjunto2);
+                        encontrados = true;
+                    }
+                }
+            }
+        }
+
+        return resultado;
     }
-
-
-
 }
