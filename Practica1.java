@@ -1,6 +1,8 @@
 package practica1;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.DoubleToIntFunction;
 
 public class Practica1 {
 
@@ -83,8 +85,29 @@ public class Practica1 {
 
     //EJERCICIO 3
     public static<T> Collection<Set<T>> divideInSets (Iterator<T> it) {
-        //TODO
-        return null;
+        Collection<Set<T>> resultado = new ArrayList<>();
+        Iterator<Set<T>> itResultado;
+
+        while (it.hasNext()) {
+            itResultado = resultado.iterator();
+            boolean repetido = true;
+            T elemento = it.next();
+            while (itResultado.hasNext()) {
+                Set<T> conjunto = itResultado.next();
+                if (!conjunto.contains(elemento)) {
+                    repetido = false;
+                    conjunto.add(elemento);
+                    break;
+                }
+            }
+            if (repetido) {
+                Set<T> nuevoConjunto = new HashSet<>();
+                nuevoConjunto.add(elemento);
+                resultado.add(nuevoConjunto);
+            }
+        }
+
+        return resultado;
     }
 
     //EJERCICIO 4
