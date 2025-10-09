@@ -32,22 +32,52 @@ public class Practica1 {
     public static void separate (Set<Integer> cuadrados, Set<Integer> noCuadrados)  {
         Iterator<Integer> itCuadrados = cuadrados.iterator();
         Iterator<Integer> itNoCuadrados = noCuadrados.iterator();
-        Set<Integer> todos = new HashSet<>();
-        todos.addAll(cuadrados); todos.addAll(noCuadrados);
+        Set<Integer> nuevoCuadrados = new HashSet<>();
+        Set<Integer> nuevoNoCuadrados = new HashSet<>();
+        Set<Integer> repetidos = new HashSet<>();
+        repetidos.addAll(cuadrados);
+        repetidos.retainAll(noCuadrados);
+
         while (itCuadrados.hasNext()) {
             int elemento = itCuadrados.next();
-            if (!noCuadrados.contains(Math.sqrt(elemento)) || !cuadrados.contains(Math.sqrt(elemento))) {
-                noCuadrados.add(elemento);
-                itCuadrados.remove();
+            if (elemento == 1 && !repetidos.contains(1)) {
+                nuevoNoCuadrados.add(elemento);
+            } else if (elemento == 1 && repetidos.contains(1)) {
+                nuevoCuadrados.add(elemento);
+            } else {
+                if (cuadrados.contains(elemento * elemento) || noCuadrados.contains(elemento * elemento)) {
+                    nuevoCuadrados.add(elemento * elemento);
+                    nuevoNoCuadrados.remove(elemento*elemento);
+                    nuevoNoCuadrados.add(elemento);
+                } else if (!cuadrados.contains(elemento * elemento) && !noCuadrados.contains(elemento * elemento)) {
+                    if (!nuevoCuadrados.contains(elemento)) {
+                        nuevoNoCuadrados.add(elemento);
+                    }
+                }
             }
         }
+
         while (itNoCuadrados.hasNext()) {
             int elemento = itNoCuadrados.next();
-            if (!noCuadrados.contains(Math.sqrt(elemento)) || !cuadrados.contains(Math.sqrt(elemento))) {
-                cuadrados.add(elemento);
-                itNoCuadrados.remove();
+            if (elemento == 1 && !repetidos.contains(1)) {
+                nuevoNoCuadrados.add(elemento);
+            } else if (elemento == 1 && repetidos.contains(1)) {
+                nuevoCuadrados.add(elemento);
+            } else {
+                if (cuadrados.contains(elemento * elemento) || noCuadrados.contains(elemento * elemento)) {
+                    nuevoCuadrados.add(elemento * elemento);
+                    nuevoNoCuadrados.remove(elemento*elemento);
+                    nuevoNoCuadrados.add(elemento);
+                } else if (!cuadrados.contains(elemento * elemento) && !noCuadrados.contains(elemento * elemento)) {
+                    if (!nuevoCuadrados.contains(elemento)) {
+                        nuevoNoCuadrados.add(elemento);
+                    }
+                }
             }
         }
+
+        cuadrados.clear(); cuadrados.addAll(nuevoCuadrados);
+        noCuadrados.clear(); noCuadrados.addAll(nuevoNoCuadrados);
 
     }
 
